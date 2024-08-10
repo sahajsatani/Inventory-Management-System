@@ -93,6 +93,7 @@ public class OrderService {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     private OrderResponse sendOrderResponce(String name, String product, int price, String phone) {
         OrderResponse orderResponse;
         try {
@@ -108,6 +109,7 @@ public class OrderService {
         }
         return orderResponse;
     }
+
     private void sendThreshold(Product p) {
         List<Admin> list = adminRepo.findAll();
         for (Admin admin : list) {
@@ -135,6 +137,7 @@ public class OrderService {
                 }
         }
     }
+
     private void sendOrderEmailToCustomer(Order order) {
         String msg = makeMsg(order);
         EmailDetails emailDetails = EmailDetails.builder()
@@ -144,11 +147,13 @@ public class OrderService {
                 .build();
         emailService.sendSimpleMail(emailDetails);
     }
+
     private String makeMsg(Order order) {
         Address address = order.getAddress();
         String msg = new StringBuilder().append("Order Confirmation\n").append("\n").append("Dear ").append(order.getCustomer().getName()).append(",\n").append("\n").append("Thank you for shopping with us! Your order has been confirmed successfully. Here are the details:\n").append("\n").append("- Order ID: ").append(order.getOrderId()).append("\n\n").append("- Order Date: ").append(order.getOrderDate()).append("\n\n").append("- Product Name: ").append(order.getProduct().getProductName()).append("\n\n").append("- Quantity: ").append(order.getQty()).append("\n\n").append("- Total Amount (INR): ").append(order.getTotalAmount()).append(".00\n\n").append("- Shipping With in : ").append(order.getShippingDate()).append("\n\n").append("- Shipping Address:\n").append("  - Apartment No.: ").append(address.getAppartmentNo()).append("\n").append("  - Society: ").append(address.getSociety()).append("\n").append("  - Area: ").append(address.getArea()).append("\n").append("  - City: ").append(address.getCity()).append("\n").append("  - State: ").append(address.getState()).append("\n").append("  - Pincode: ").append(address.getPincode()).append("\n").append("\n").append("Your order is on its way! We'll notify you once it's shipped.\n").append("\n").append("If you have any questions or need assistance, feel free to reply to this email or contact our customer support team.\n").append("\n").append("Thank you for choosing us!\n").append("\n").append("Best regards,\n").append("Shopify\n").toString();
         return msg;
     }
+
     public ResponseEntity<?> getOrder(int id) {
         return new ResponseEntity<>(orderRepo.findById(id), HttpStatus.OK);
     }
