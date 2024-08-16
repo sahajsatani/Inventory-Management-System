@@ -18,5 +18,4 @@ public class CustomerController {
         return customerService.addCustomer(customer);
     }
 
-
 }

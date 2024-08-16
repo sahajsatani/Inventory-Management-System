@@ -29,4 +29,6 @@ public class Admin {
     @Pattern(regexp = "^[1-9][0-9]{9}$")
     private String whatsappNumber;
 
+    private String password;
+
 }
