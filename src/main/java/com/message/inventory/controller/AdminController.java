@@ -27,10 +27,11 @@ public class AdminController {
     public String getSesssion(HttpServletRequest request){
         return "Hey "+request.getSession().getId();
     }
-    @PostMapping("/add")
-    public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
-        return adminService.newAdmin(admin);
-    }
+
+//    @PostMapping("/add")
+//    public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
+//        return adminService.newAdmin(admin);
+//    }
 
 
     @PostMapping("/addStoke")
