@@ -28,11 +28,20 @@ public class AdminController {
         return "Hey "+request.getSession().getId();
     }
 
-//    @PostMapping("/add")
-//    public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
-//        return adminService.newAdmin(admin);
-//    }
+    @PostMapping("/login")
+    public String login(@RequestBody Admin admin){
+        return "Success";
+    }
 
+    @PostMapping("/add")
+    public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
+        return adminService.newAdmin(admin);
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> updateAdmin(@RequestBody Admin admin){
+        return adminService.updateAdmin(admin);
+    }
 
     @PostMapping("/addStoke")
     public ResponseEntity<?> addStock(@RequestBody List<Stock> list) {
