@@ -30,11 +30,13 @@ public class AdminController {
 
     @PostMapping("/login")
     public String login(@RequestBody Admin admin){
-        return "Success";
+        System.out.println(admin);
+        return adminService.verify(admin);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/register")
     public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
+        System.out.println(admin);
         return adminService.newAdmin(admin);
     }
 

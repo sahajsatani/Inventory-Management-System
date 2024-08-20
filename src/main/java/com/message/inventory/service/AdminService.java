@@ -5,9 +5,13 @@ import com.message.inventory.model.DTO.Stock;
 import com.message.inventory.model.Product;
 import com.message.inventory.repositories.AdminRepo;
 import com.message.inventory.repositories.ProductRepo;
+import com.twilio.jwt.Jwt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +27,12 @@ public class AdminService {
 
     @Autowired
     ProductRepo productRepo;
+
+    @Autowired
+    JWTService jwtService;
+
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     public ResponseEntity<?> newAdmin(Admin admin) {
         try{
@@ -66,5 +76,13 @@ public class AdminService {
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CREATED);
         }
+    }
+
+    public String verify(Admin admin) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(),admin.getPassword()));
+        if(authentication.isAuthenticated()){
+            return jwtService.generateToken(admin.getEmail());
+        }
+        return "fail Not generated tocken";
     }
 }
