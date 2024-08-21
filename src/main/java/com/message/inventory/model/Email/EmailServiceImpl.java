@@ -1,6 +1,6 @@
 package com.message.inventory.model.Email;
 
-import com.message.inventory.model.Admin;
+import com.message.inventory.model.Entity.Admin;
 import com.message.inventory.repositories.AdminRepo;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

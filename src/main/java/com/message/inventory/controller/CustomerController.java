@@ -1,7 +1,6 @@
 package com.message.inventory.controller;
 
-import com.message.inventory.model.Embedable.Address;
-import com.message.inventory.model.Customer;
+import com.message.inventory.model.Entity.Customer;
 import com.message.inventory.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

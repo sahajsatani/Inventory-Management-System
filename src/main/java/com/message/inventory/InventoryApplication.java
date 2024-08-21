@@ -1,6 +1,6 @@
 package com.message.inventory;
 
-import com.message.inventory.config.TwilioConfig;
+import com.message.inventory.config.Mail.TwilioConfig;
 import com.twilio.Twilio;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

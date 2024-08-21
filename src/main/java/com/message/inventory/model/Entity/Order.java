@@ -1,4 +1,4 @@
-package com.message.inventory.model;
+package com.message.inventory.model.Entity;
 
 import com.message.inventory.model.InvoiceDtos.Status;
 import com.message.inventory.model.Embedable.Address;

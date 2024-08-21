@@ -1,7 +1,6 @@
 package com.message.inventory.repositories;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.message.inventory.model.Order;
+import com.message.inventory.model.Entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

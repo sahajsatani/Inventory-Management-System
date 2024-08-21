@@ -1,5 +1,6 @@
-package com.message.inventory.model;
+package com.message.inventory.model.CustomeUserDetailsImplementaion;
 
+import com.message.inventory.model.Entity.Admin;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

@@ -1,16 +1,18 @@
 package com.message.inventory.service;
 
-import com.message.inventory.config.TwilioConfig;
-import com.message.inventory.model.*;
+import com.message.inventory.config.Mail.TwilioConfig;
 import com.message.inventory.model.CustomerResponseDtos.OrderResponse;
 import com.message.inventory.model.Email.EmailDetails;
 import com.message.inventory.model.Email.EmailService;
 import com.message.inventory.model.Embedable.Address;
+import com.message.inventory.model.Entity.Admin;
+import com.message.inventory.model.Entity.Invoice;
+import com.message.inventory.model.Entity.Order;
+import com.message.inventory.model.Entity.Product;
 import com.message.inventory.model.InvoiceDtos.Status;
 import com.message.inventory.repositories.*;
 import com.twilio.rest.api.v2010.account.Message;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,9 +1,9 @@
-package com.message.inventory;
+package com.message.inventory.Schedulers;
 
-import com.message.inventory.model.Admin;
+import com.message.inventory.model.Entity.Admin;
 import com.message.inventory.model.Email.EmailDetails;
 import com.message.inventory.model.Email.EmailService;
-import com.message.inventory.model.Product;
+import com.message.inventory.model.Entity.Product;
 import com.message.inventory.repositories.AdminRepo;
 import com.message.inventory.repositories.ProductRepo;
 import jakarta.transaction.Transactional;

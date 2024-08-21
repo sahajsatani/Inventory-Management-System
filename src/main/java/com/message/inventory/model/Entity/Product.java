@@ -1,4 +1,4 @@
-package com.message.inventory.model;
+package com.message.inventory.model.Entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
@@ -7,7 +7,6 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.ArrayList;
 import java.util.List;

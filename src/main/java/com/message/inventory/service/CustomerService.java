@@ -1,14 +1,11 @@
 package com.message.inventory.service;
 
-import com.message.inventory.model.Embedable.Address;
-import com.message.inventory.model.Customer;
+import com.message.inventory.model.Entity.Customer;
 import com.message.inventory.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class CustomerService {

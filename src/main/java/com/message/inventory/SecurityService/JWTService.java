@@ -1,4 +1,4 @@
-package com.message.inventory.service;
+package com.message.inventory.SecurityService;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;

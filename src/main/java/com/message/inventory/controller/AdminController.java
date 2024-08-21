@@ -1,12 +1,11 @@
 package com.message.inventory.controller;
 
-import com.message.inventory.model.Admin;
+import com.message.inventory.model.Entity.Admin;
 import com.message.inventory.model.DTO.Stock;
 import com.message.inventory.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +22,7 @@ public class AdminController {
         return (org.springframework.security.web.server.csrf.CsrfToken) request.getAttribute("_csrf");
     }
 
-    @GetMapping("/getSession")
+    @PostMapping("/getSession")
     public String getSesssion(HttpServletRequest request){
         return "Hey "+request.getSession().getId();
     }

@@ -1,4 +1,4 @@
-package com.message.inventory.config;
+package com.message.inventory.config.Mail;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
