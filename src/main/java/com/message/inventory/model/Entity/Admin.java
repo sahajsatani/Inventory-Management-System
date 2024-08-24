@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.UniqueElements;
 
 @Entity
 @Table(name = "tbladmin")
@@ -21,6 +22,7 @@ public class Admin {
     private String name;
 
     @Email
+    @UniqueElements
     private String email;
 
     @Pattern(regexp = "^[1-9][0-9]{9}$")

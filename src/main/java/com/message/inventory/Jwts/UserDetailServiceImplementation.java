@@ -1,7 +1,6 @@
-package com.message.inventory.SecurityService;
+package com.message.inventory.Jwts;
 
 import com.message.inventory.model.Entity.Admin;
-import com.message.inventory.model.CustomeUserDetailsImplementaion.UserPrincipal;
 import com.message.inventory.repositories.AdminRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class MyUserDetailService implements UserDetailsService {
+public class UserDetailServiceImplementation implements UserDetailsService {
     @Autowired
     AdminRepo adminRepo;
 
@@ -25,7 +24,7 @@ public class MyUserDetailService implements UserDetailsService {
             throw new UsernameNotFoundException(username);
         }
         else{
-            return new UserPrincipal(admin);
+            return new UserDetailsImplementation(admin);
         }
     }
 }

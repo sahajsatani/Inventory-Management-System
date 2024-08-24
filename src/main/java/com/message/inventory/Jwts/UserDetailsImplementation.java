@@ -1,4 +1,4 @@
-package com.message.inventory.model.CustomeUserDetailsImplementaion;
+package com.message.inventory.Jwts;
 
 import com.message.inventory.model.Entity.Admin;
 import org.springframework.security.core.GrantedAuthority;
@@ -8,11 +8,11 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class UserPrincipal implements UserDetails {
+public class UserDetailsImplementation implements UserDetails {
 
     private final Admin admin;
 
-    public UserPrincipal(Admin admin){
+    public UserDetailsImplementation(Admin admin){
         this.admin = admin;
     }
 

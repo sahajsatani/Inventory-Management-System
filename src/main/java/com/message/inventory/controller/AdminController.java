@@ -35,7 +35,6 @@ public class AdminController {
 
     @PostMapping("/register")
     public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
-        System.out.println(admin);
         return adminService.newAdmin(admin);
     }
 

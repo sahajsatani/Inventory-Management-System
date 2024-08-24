@@ -1,4 +1,4 @@
-package com.message.inventory.config.Security;
+package com.message.inventory.Jwts;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +19,32 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
     @Autowired
+    JwtFilter jwtFilter;
+
+    @Autowired
     UserDetailsService userDetailsService;
 
-    @Bean
-    public SecurityFilterChain bySelftSecurityFilterChain(HttpSecurity http) throws Exception {
+    @Bean //Filter chain handle api and check it authenticated or not and take action as per security configuration
+    public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                                .requestMatchers("register","login").permitAll()
+                                .requestMatchers("admin/register","admin/login").permitAll()
                                 .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
-                .formLogin(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
+
+    //Authentication provider set UserDetailService & password encoder
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
@@ -46,18 +52,20 @@ public class SecurityConfig {
         provider.setUserDetailsService(userDetailsService);
         return provider;
     }
+    //that is a bean as autowired that provide object of authenticationManager
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
-    @Bean
-    public UserDetailsService userDetailsService(){
-        UserDetails user1 = User.withUsername("pal1032@gmail.com")
-                .password("{noop}pal@123")
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user1);
-    }
+//    @Bean
+//    public UserDetailsService userDetailsService(){
+//        UserDetails user1 = User
+//                .withUsername("pals1032@gmail.com")
+//                .password("{noop}pals@123")
+//                .roles("USER")
+//                .build();
+//        return new InMemoryUserDetailsManager(user1);
+//    }
 
 }

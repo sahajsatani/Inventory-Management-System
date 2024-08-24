@@ -4,7 +4,7 @@ import com.message.inventory.model.Entity.Admin;
 import com.message.inventory.model.DTO.Stock;
 import com.message.inventory.repositories.AdminRepo;
 import com.message.inventory.repositories.ProductRepo;
-import com.message.inventory.SecurityService.JWTService;
+import com.message.inventory.Jwts.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +28,7 @@ public class AdminService {
     ProductRepo productRepo;
 
     @Autowired
-    JWTService jwtService;
+    JwtService jwtService;
 
     @Autowired
     AuthenticationManager authenticationManager;
