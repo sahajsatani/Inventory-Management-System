@@ -22,10 +22,13 @@ public class AdminController {
         return (org.springframework.security.web.server.csrf.CsrfToken) request.getAttribute("_csrf");
     }
 
-    @PostMapping("/getSession")
-    public String getSesssion(HttpServletRequest request){
+    @GetMapping("/getSession")
+    public String getSession(HttpServletRequest request){
         return "Hey "+request.getSession().getId();
     }
+
+    @GetMapping("/getName")
+    public String getName(){return "Satani sahaj";}
 
     @PostMapping("/login")
     public String login(@RequestBody Admin admin){

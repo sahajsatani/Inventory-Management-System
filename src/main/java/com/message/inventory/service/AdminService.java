@@ -22,7 +22,7 @@ public class AdminService {
     @Autowired
     AdminRepo adminRepo;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
+    private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
 
     @Autowired
     ProductRepo productRepo;
@@ -78,10 +78,11 @@ public class AdminService {
     }
 
     public String verify(Admin admin) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(),admin.getPassword()));
+        Authentication authentication =
+                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(),admin.getPassword()));
         if(authentication.isAuthenticated()){
             return jwtService.generateToken(admin.getEmail());
         }
-        return "fail Not generated tocken";
+        return "Unauthenticated";
     }
 }

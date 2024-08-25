@@ -22,7 +22,6 @@ public class Admin {
     private String name;
 
     @Email
-    @UniqueElements
     private String email;
 
     @Pattern(regexp = "^[1-9][0-9]{9}$")
@@ -32,5 +31,4 @@ public class Admin {
     private String whatsappNumber;
 
     private String password;
-
 }

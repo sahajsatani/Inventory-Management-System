@@ -1,5 +1,6 @@
 package com.message.inventory.Jwts;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -13,6 +14,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.function.Function;
 
 @Service
 public class JwtService {
@@ -36,7 +38,7 @@ public class JwtService {
                 .add(claims)
                 .subject(email)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date((System.currentTimeMillis()+1000000000)))
+                .expiration(new Date((System.currentTimeMillis()+1000000)))
                 .and()
                 .signWith(getSecretKey())
                 .compact();
@@ -50,24 +52,33 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
+        return extractClaim(token, Claims::getSubject);
+    }
+
+    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
+        final Claims claims = extractAllClaims(token);
+        return claimResolver.apply(claims);
+    }
+
+    private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith((SecretKey) getSecretKey())
                 .build()
                 .parseSignedClaims(token)
-                .getPayload().getSubject();
+                .getPayload();
     }
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUsername(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        String email = userDetails.getUsername();
+        return (username.equals(email)&& !isTokenExpired(token));
     }
 
     private boolean isTokenExpired(String token) {
-        Date date = Jwts.parser()
-                .verifyWith((SecretKey) getSecretKey())
-                .build()
-                .parseSignedClaims(token)
-                .getPayload().getExpiration();
-        return date.before(new Date());
+       return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token){
+        return extractClaim(token, Claims::getExpiration);
     }
 }

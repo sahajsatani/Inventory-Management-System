@@ -28,6 +28,7 @@ public class UserDetailsImplementation implements UserDetails {
 
     @Override
     public String getUsername() {
+        System.out.println(admin.toString());
         return admin.getEmail();
     }
 
