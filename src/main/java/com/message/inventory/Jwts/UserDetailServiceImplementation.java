@@ -21,7 +21,7 @@ public class UserDetailServiceImplementation implements UserDetailsService {
         List<Object[]> objects = adminRepo.findByEmail(username);
         Admin admin = new Admin((int)objects.get(0)[0],(String)objects.get(0)[2],(String)objects.get(0)[1],(String)objects.get(0)[3],(String)objects.get(0)[4],(String)objects.get(0)[5]);
         if(admin==null){
-            System.out.println("Not found");
+            System.out.println("User not found in loadUserByUsername method.");
             throw new UsernameNotFoundException(username);
         }
         else{

@@ -40,5 +40,4 @@ public class Product {
     public Product(int productId) {
         this.productId = productId;
     }
-
 }

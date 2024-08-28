@@ -20,6 +20,13 @@ import java.util.function.Function;
 public class JwtService {
     private static String secretKey;
 
+    //This constructor assign secret key by autowired rather than not by creating obj
+    //because every time when we use new key keyword that time it will generate another secret key
+    //algorithm :
+    //AES (128)
+    //DESede (168)
+    //HmacSHA1
+    //HmacSHA256
     public JwtService() {
         try {
             KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
@@ -29,6 +36,7 @@ public class JwtService {
             throw new RuntimeException(e);
         }
     }
+
 
     //that generate jwt token
     public String generateToken(String email) {
@@ -52,21 +60,26 @@ public class JwtService {
     }
 
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
-    }
-
-    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
-        final Claims claims = extractAllClaims(token);
-        return claimResolver.apply(claims);
-    }
-
-    private Claims extractAllClaims(String token) {
         return Jwts.parser()
                 .verifyWith((SecretKey) getSecretKey())
                 .build()
                 .parseSignedClaims(token)
-                .getPayload();
+                .getPayload()
+                .getSubject();
     }
+
+//    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
+//        final Claims claims = extractAllClaims(token);
+//        return claimResolver.apply(claims);
+//    }
+//
+//    private Claims extractAllClaims(String token) {
+//        return Jwts.parser()
+//                .verifyWith((SecretKey) getSecretKey())
+//                .build()
+//                .parseSignedClaims(token)
+//                .getPayload();
+//    }
 
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUsername(token);
@@ -75,10 +88,16 @@ public class JwtService {
     }
 
     private boolean isTokenExpired(String token) {
-       return extractExpiration(token).before(new Date());
+       return Jwts.parser()
+                   .verifyWith((SecretKey) getSecretKey())
+                   .build()
+                   .parseSignedClaims(token)
+                   .getPayload()
+                   .getExpiration()
+               .before(new Date());
     }
 
-    private Date extractExpiration(String token){
-        return extractClaim(token, Claims::getExpiration);
-    }
+//    private Date extractExpiration(String token){
+//        return extractClaim(token, Claims::getExpiration);
+//    }
 }

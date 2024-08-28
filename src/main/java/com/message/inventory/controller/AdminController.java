@@ -32,7 +32,6 @@ public class AdminController {
 
     @PostMapping("/login")
     public String login(@RequestBody Admin admin){
-        System.out.println(admin);
         return adminService.verify(admin);
     }
 
