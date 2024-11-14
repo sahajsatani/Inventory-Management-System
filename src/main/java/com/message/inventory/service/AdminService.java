@@ -78,8 +78,7 @@ public class AdminService {
     }
 
     public String verify(Admin admin) {
-        Authentication authentication =
-                authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(),admin.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(),admin.getPassword()));
         if(authentication.isAuthenticated()){
             return jwtService.generateToken(admin.getEmail());
         }

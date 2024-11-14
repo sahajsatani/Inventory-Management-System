@@ -17,19 +17,6 @@ public class AdminController {
     @Autowired
     AdminService adminService;
 
-    @GetMapping("/getCsrf")
-    public org.springframework.security.web.server.csrf.CsrfToken getCsrf(HttpServletRequest request){
-        return (org.springframework.security.web.server.csrf.CsrfToken) request.getAttribute("_csrf");
-    }
-
-    @GetMapping("/getSession")
-    public String getSession(HttpServletRequest request){
-        return "Hey "+request.getSession().getId();
-    }
-
-    @GetMapping("/getName")
-    public String getName(){return "Satani sahaj";}
-
     @PostMapping("/login")
     public String login(@RequestBody Admin admin){
         return adminService.verify(admin);
@@ -49,4 +36,19 @@ public class AdminController {
     public ResponseEntity<?> addStock(@RequestBody List<Stock> list) {
         return adminService.addStock(list);
     }
+
+
+    @GetMapping("/getCsrf")
+    public org.springframework.security.web.server.csrf.CsrfToken getCsrf(HttpServletRequest request){
+        return (org.springframework.security.web.server.csrf.CsrfToken) request.getAttribute("_csrf");
+    }
+
+    @GetMapping("/getSession")
+    public String getSession(HttpServletRequest request){
+        return "Hey "+request.getSession().getId();
+    }
+
+    @GetMapping("/getName")
+    public String getName(){return "Satani sahaj";}
+
 }

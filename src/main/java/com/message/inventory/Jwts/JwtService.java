@@ -1,9 +1,11 @@
 package com.message.inventory.Jwts;
 
+import com.message.inventory.model.Entity.Admin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.Builder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,7 @@ import java.util.HashMap;
 import java.util.function.Function;
 
 @Service
+@Builder
 public class JwtService {
     private static String secretKey;
 
@@ -36,7 +39,6 @@ public class JwtService {
             throw new RuntimeException(e);
         }
     }
-
 
     //that generate jwt token
     public String generateToken(String email) {
@@ -68,19 +70,6 @@ public class JwtService {
                 .getSubject();
     }
 
-//    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
-//        final Claims claims = extractAllClaims(token);
-//        return claimResolver.apply(claims);
-//    }
-//
-//    private Claims extractAllClaims(String token) {
-//        return Jwts.parser()
-//                .verifyWith((SecretKey) getSecretKey())
-//                .build()
-//                .parseSignedClaims(token)
-//                .getPayload();
-//    }
-
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUsername(token);
         String email = userDetails.getUsername();
@@ -96,6 +85,20 @@ public class JwtService {
                    .getExpiration()
                .before(new Date());
     }
+
+//    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
+//        final Claims claims = extractAllClaims(token);
+//        return claimResolver.apply(claims);
+//    }
+//
+//    private Claims extractAllClaims(String token) {
+//        return Jwts.parser()
+//                .verifyWith((SecretKey) getSecretKey())
+//                .build()
+//                .parseSignedClaims(token)
+//                .getPayload();
+//    }
+
 
 //    private Date extractExpiration(String token){
 //        return extractClaim(token, Claims::getExpiration);

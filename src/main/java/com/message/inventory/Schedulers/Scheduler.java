@@ -26,13 +26,10 @@ import java.util.List;
 public class Scheduler {
     @Autowired
     ProductRepo productRepo;
-
     @Autowired
     EmailService emailService;
-
     @Autowired
     AdminRepo adminRepo;
-
     @Scheduled(cron = "0 0 0 * * *")
     @Transactional
     public void sendReport() {
@@ -42,11 +39,11 @@ public class Scheduler {
             List<Product> list = productRepo.findAll();
             Writer writer = new FileWriter("C:\\Users\\sahaj\\IdeaProjects\\inventory\\report.csv");
             ICsvBeanWriter iCsvBeanWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
-            String[] header = {"productName","inventoryStoke","sold"};
+            String[] header = {"productName", "inventoryStoke", "sold"};
             iCsvBeanWriter.writeHeader(header);
             boolean flage = false;
             for (Product product : list) {
-                if(product.getSold()>0) {
+                if (product.getSold() > 0) {
                     flage = true;
                     iCsvBeanWriter.write(product, header);
                 }
@@ -55,7 +52,6 @@ public class Scheduler {
             writer.close();
 
             if(flage){
-                //send
                 List<Admin> admins = adminRepo.findAll();
                 EmailDetails emailDetails = EmailDetails.builder()
                         .msgBody("Today's total sold product:")

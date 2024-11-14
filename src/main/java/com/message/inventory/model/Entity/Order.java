@@ -29,10 +29,7 @@ public class Order {
     @Min(1) @Max(10)
     private int qty;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
-
+    private int price;
     private int totalAmount;
 
     private Status status = Status.ISSUED;
@@ -40,11 +37,17 @@ public class Order {
     private Address address;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @OneToOne(mappedBy = "orderID",cascade = CascadeType.ALL)
+    private Invoice invoiceId;
 
     public Order(int orderId) {
         this.orderId = orderId;
     }
-
 }

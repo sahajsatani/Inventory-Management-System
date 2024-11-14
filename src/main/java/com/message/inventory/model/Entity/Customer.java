@@ -30,11 +30,14 @@ public class Customer {
     @Email
     private String email;
 
+    private String password;
+
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customerPayment")
     private List<Invoice> invoices = new ArrayList<>();
+
 
     public Customer(int customerId) {
         this.customerId = customerId;

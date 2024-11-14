@@ -36,8 +36,10 @@ public class SecurityConfig {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
-                                .requestMatchers("admin/register","admin/login").permitAll()
-                                .anyRequest().authenticated())
+                        .requestMatchers("customer/createOrder","customer/getOrder").hasAuthority("USER")
+                        .requestMatchers("admin/update","admin/addStoke","product/add").hasAuthority("ADMIN")
+                        .requestMatchers("admin/register","admin/login","customer/register","customer/login").permitAll()
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)

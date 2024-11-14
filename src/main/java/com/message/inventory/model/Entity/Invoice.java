@@ -37,6 +37,6 @@ public class Invoice {
 
     @OneToOne
     @JoinColumn(name = "order_id")
-    private Order order;
+    private Order orderID;
 
 }
