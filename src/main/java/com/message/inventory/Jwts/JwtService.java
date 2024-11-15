@@ -89,6 +89,7 @@ public class JwtService {
                .before(new Date());
     }
 
+    //Old way to gathering claims from token
 //    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
 //        final Claims claims = extractAllClaims(token);
 //        return claimResolver.apply(claims);
@@ -101,7 +102,6 @@ public class JwtService {
 //                .parseSignedClaims(token)
 //                .getPayload();
 //    }
-
 
 //    private Date extractExpiration(String token){
 //        return extractClaim(token, Claims::getExpiration);

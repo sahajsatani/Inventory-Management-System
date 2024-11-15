@@ -25,7 +25,7 @@ public class CustomerController {
         return orderService.getOrder(id);
     }
     @PostMapping("/login")
-    public String login(@RequestBody Customer customer){
+    public ResponseEntity<?> login(@RequestBody Customer customer){
         return customerService.verify(customer);
     }
     @PostMapping("/register")

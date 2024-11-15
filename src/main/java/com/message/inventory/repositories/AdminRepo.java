@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface AdminRepo extends JpaRepository<Admin,Integer> {
-    @Query(value = "select * from tbladmin where email = ?1",nativeQuery = true)
-    List<Object[]> findByEmail(String email);
+//    @Query(value = "select * from tbladmin where email = ?1",nativeQuery = true)
+    Admin findByEmail(String email);
 
 }

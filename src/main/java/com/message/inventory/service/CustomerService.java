@@ -34,11 +34,17 @@ public class CustomerService {
         }
     }
 
-    public String verify(Customer customer) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(customer.getEmail(),customer.getPassword()));
-        if(authentication.isAuthenticated()){
-            return jwtService.generateToken(customer.getEmail());
+    public ResponseEntity<?> verify(Customer customer) {
+        Authentication authentication;
+        try{
+            authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(customer.getEmail(), customer.getPassword()));
         }
-        return "Unauthenticated";
+        catch (Exception ex){
+            return new ResponseEntity<>(customer.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+        }
+        if (authentication.isAuthenticated()) {
+            return new ResponseEntity<>(jwtService.generateToken(customer.getEmail()),HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(customer.getEmail()+" Not found",HttpStatus.NOT_FOUND);
     }
 }

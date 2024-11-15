@@ -37,7 +37,7 @@ public class SecurityConfig {
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("customer/createOrder","customer/getOrder").hasAuthority("USER")
-                        .requestMatchers("admin/update","admin/addStoke","product/add").hasAuthority("ADMIN")
+                        .requestMatchers("admin/update","admin/addStoke","product/add","customer/createOrder","customer/getOrder").hasAuthority("ADMIN")
                         .requestMatchers("admin/register","admin/login","customer/register","customer/login").permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
@@ -59,15 +59,5 @@ public class SecurityConfig {
     public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
-
-//    @Bean
-//    public UserDetailsService userDetailsService(){
-//        UserDetails user1 = User
-//                .withUsername("pals1032@gmail.com")
-//                .password("{noop}pals@123")
-//                .roles("USER")
-//                .build();
-//        return new InMemoryUserDetailsManager(user1);
-//    }
 
 }

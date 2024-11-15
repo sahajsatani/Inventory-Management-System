@@ -21,18 +21,13 @@ public class AdminService {
 
     @Autowired
     AdminRepo adminRepo;
-
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
-
     @Autowired
     ProductRepo productRepo;
-
     @Autowired
     JwtService jwtService;
-
     @Autowired
     AuthenticationManager authenticationManager;
-
     public ResponseEntity<?> newAdmin(Admin admin) {
         try{
             admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
@@ -44,7 +39,6 @@ public class AdminService {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CREATED);
         }
     }
-
     public ResponseEntity<?> addStock(List<Stock> list) {
         try{
             boolean flag = true;
@@ -64,7 +58,6 @@ public class AdminService {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     public ResponseEntity<?> updateAdmin(Admin admin) {
         try{
             admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
@@ -76,12 +69,17 @@ public class AdminService {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CREATED);
         }
     }
-
-    public String verify(Admin admin) {
-        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(),admin.getPassword()));
-        if(authentication.isAuthenticated()){
-            return jwtService.generateToken(admin.getEmail());
+    public ResponseEntity<?> verify(Admin admin) {
+        Authentication authentication;
+        try{
+             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(), admin.getPassword()));
         }
-        return "Unauthenticated";
+        catch (Exception ex){
+            return new ResponseEntity<>(admin.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+        }
+        if (authentication.isAuthenticated()) {
+            return new ResponseEntity<>(jwtService.generateToken(admin.getEmail()),HttpStatus.FOUND);
+        }
+        return new ResponseEntity<>(admin.getEmail()+" Not found",HttpStatus.NOT_FOUND);
     }
 }

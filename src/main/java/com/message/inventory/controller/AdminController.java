@@ -16,7 +16,7 @@ public class AdminController {
     @Autowired
     AdminService adminService;
     @PostMapping("/login")
-    public String login(@RequestBody Admin admin){
+    public ResponseEntity<?> login(@RequestBody Admin admin){
         return adminService.verify(admin);
     }
     @PostMapping("/register")

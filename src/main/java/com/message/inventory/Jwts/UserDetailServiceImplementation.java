@@ -4,6 +4,7 @@ import com.message.inventory.model.Entity.Admin;
 import com.message.inventory.model.Entity.Customer;
 import com.message.inventory.repositories.AdminRepo;
 import com.message.inventory.repositories.CustomerRepo;
+import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,31 +24,49 @@ public class UserDetailServiceImplementation implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        List<Object[]> objectsAdmin = adminRepo.findByEmail(username);
-        List<Object[]> objectsCust = customerRepo.findByEmail(username);
-        if(!objectsAdmin.isEmpty()){
-            Admin admin = new Admin();
-            admin.setAdminId((int) objectsAdmin.get(0)[0]);
-            admin.setEmail((String) objectsAdmin.get(0)[1]);
-            admin.setName((String) objectsAdmin.get(0)[2]);
-            admin.setPassword((String) objectsAdmin.get(0)[3]);
-            admin.setPhone((String) objectsAdmin.get(0)[4]);
-            admin.setWhatsappNumber((String) objectsAdmin.get(0)[5]);
-//        Admin admin = new Admin((int)objectsAdmin.get(0)[0],(String)objectsAdmin.get(0)[2],(String)objectsAdmin.get(0)[1],(String)objectsAdmin.get(0)[3],(String)objectsAdmin.get(0)[4],(String)objectsAdmin.get(0)[5]);
-            return new UserDetailsImplementation(admin);
-        }
-        else if(!objectsCust.isEmpty()){
-            Customer customer = new Customer();
-            customer.setCustomerId((int)objectsCust.getFirst()[0]);
-            customer.setEmail((String) objectsCust.getFirst()[1]);
-            customer.setName((String) objectsCust.getFirst()[2]);
-            customer.setPhone((String) objectsCust.getFirst()[3]);
-            customer.setPassword((String) objectsCust.getFirst()[4]);
-            return new UserDetailsImplementation(customer);
-        }
-        else {
-//            System.out.println("User not found in loadUserByUsername method.");
-            throw new UsernameNotFoundException(username);
-        }
+        Admin admin = adminRepo.findByEmail(username);
+        Customer customer = customerRepo.findByEmail(username);
+        if (admin != null && customer == null) return new UserDetailsImplementation(admin);
+        else if (admin == null && customer != null) return new UserDetailsImplementation(customer);
+        else throw new UsernameNotFoundException(username);
+
+
+//        if (!admin.isEmpty() && .isEmpty()) {
+////            Admin admin = Admin.builder()
+////                    .adminId((int) admin.get(0)[0])
+////                    .email((String) admin.get(0)[1])
+////                    .name((String) admin.get(0)[2])
+////                    .password((String) admin.get(0)[3])
+////                    .phone((String) admin.get(0)[4])
+////                    .whatsappNumber((String) admin.get(0)[5])
+////                    .build();
+////        Admin admin = new Admin((int)admin.get(0)[0],(String)admin.get(0)[2],(String)admin.get(0)[1],(String)admin.get(0)[3],(String)admin.get(0)[4],(String)admin.get(0)[5]);
+//            return new UserDetailsImplementation(admin.);
+//        }
+//        else if (!.isEmpty() && admin.isEmpty()) {
+//            Customer customer = Customer.builder()
+//                    .customerId((int) .getFirst()[0])
+//                    .email((String) .getFirst()[1])
+//                    .name((String) .getFirst()[2])
+//                    .phone((String) .getFirst()[3])
+//                    .password((String) .getFirst()[4])
+//                    .build();
+//            return new UserDetailsImplementation(customer);
+//        }
+//        else if (!.isEmpty() && !admin.isEmpty()) {
+//            Admin admin = Admin.builder()
+//                    .adminId((int) admin.get(0)[0])
+//                    .email((String) admin.get(0)[1])
+//                    .name((String) admin.get(0)[2])
+//                    .password((String) admin.get(0)[3])
+//                    .phone((String) admin.get(0)[4])
+//                    .whatsappNumber((String) admin.get(0)[5])
+//                    .build();
+////        Admin admin = new Admin((int)admin.get(0)[0],(String)admin.get(0)[2],(String)admin.get(0)[1],(String)admin.get(0)[3],(String)admin.get(0)[4],(String)admin.get(0)[5]);
+//            return new UserDetailsImplementation(admin);
+//        }
+//        else {
+//            throw new UsernameNotFoundException(username);
+//        }
     }
 }
