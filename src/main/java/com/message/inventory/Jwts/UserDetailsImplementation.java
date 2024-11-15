@@ -8,21 +8,24 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.Collections;
-
+//Implement UserDetails for abstract user details and authentication process
 public class UserDetailsImplementation implements UserDetails {
 
     private final Admin admin;
     private final Customer customer;
+    //Initialise customer obj
     public UserDetailsImplementation(Customer customer){
         this.customer = customer;
         this.admin=null;
     }
 
+    //Initialise admin obj
     public UserDetailsImplementation(Admin admin){
         this.admin = admin;
         this.customer=null;
     }
 
+    //For retrieve authorities role of current logged in person
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if(admin!=null)

@@ -40,7 +40,6 @@ public class OrderService {
     CustomerRepo customerRepo;
     @Autowired
     JwtService jwtService;
-
     @Transactional
     public ResponseEntity<?> generateOrder(Order order) {
         try {
@@ -49,7 +48,6 @@ public class OrderService {
             order.setCustomer(customerRepo.findById(order.getCustomer().getCustomerId()).get());
             order.setPrice(p.getPrice());
             order.setTotalAmount(((p.getPrice() + (p.getPrice() * p.getGst()) / 100)) * order.getQty());
-
 
             String msg;
             if (p.getInventoryStoke()>=order.getQty() && paymentStatus(order)) {
@@ -69,12 +67,10 @@ public class OrderService {
                         .build();
                 //Send SMS to customer
                 OrderResponse orderResponse = sendOrderResponce(order.getCustomer().getName(),p.getProductName(),invoice.getTotalAmount(),order.getCustomer().getPhone());
-//                OrderResponse orderResponse = new OrderResponse(com.message.inventory.model.CustomerResponseDtos.Status.DELIVERED, "Message Send Successfully...");
 
                 //Send Email to customer
-                sendOrderStatusToCustomerByEmail(order);
+                sendOrderStatusToCustomerByEmail(orderRepo.save(order));
 
-                orderRepo.save(order);
                 p = productRepo.save(p);
                 invoiceService.createInvoice(invoice);
                 //Send Threshold if stoke less than criteria
@@ -90,6 +86,7 @@ public class OrderService {
             else {
                 msg="Transaction Faild.";
             }
+
             //Send Threshold if stoke less than criteria
             if(p.getInventoryStoke()<=100) {
                 sendThresholdByEmail(p);
@@ -110,7 +107,7 @@ public class OrderService {
 //                            new com.twilio.type.PhoneNumber("+14157670885"),
 //                            "Dear " + name + ", Your order of " + product + " is confirmed for price " + price + " INR. We’ll keep you updated on its status. Your satisfaction is our priority. Let us know if there’s anything we can improve.")
 //                    .create();
-            orderResponse = new OrderResponse(com.message.inventory.model.CustomerResponseDtos.Status.CONFIRMD, "Message Send Successfully...");
+            orderResponse = new OrderResponse(com.message.inventory.model.CustomerResponseDtos.Status.CONFIRMED, "Message Send Successfully...");
         } catch (Exception e) {
             orderResponse = new OrderResponse(com.message.inventory.model.CustomerResponseDtos.Status.FAILED, e.getMessage());
         }

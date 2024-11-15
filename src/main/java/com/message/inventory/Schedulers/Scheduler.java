@@ -34,8 +34,7 @@ public class Scheduler {
     @Transactional
     public void sendReport() {
         try{
-            System.out.println("Execute send report");
-            //create
+            //create report of total selling
             List<Product> list = productRepo.findAll();
             Writer writer = new FileWriter("C:\\Users\\sahaj\\IdeaProjects\\inventory\\report.csv");
             ICsvBeanWriter iCsvBeanWriter = new CsvBeanWriter(writer, CsvPreference.STANDARD_PREFERENCE);
@@ -51,6 +50,7 @@ public class Scheduler {
             iCsvBeanWriter.close();
             writer.close();
 
+            //Send report if sold any product
             if(flage){
                 List<Admin> admins = adminRepo.findAll();
                 EmailDetails emailDetails = EmailDetails.builder()
@@ -64,6 +64,7 @@ public class Scheduler {
                 }
                 productRepo.updateSold();
             }
+            //Send msg if not sell any product
             else{
                 List<Admin> admins = adminRepo.findAll();
                 EmailDetails emailDetails = EmailDetails.builder()
@@ -75,6 +76,7 @@ public class Scheduler {
                     emailService.sendSimpleMail(emailDetails);
                 }
             }
+
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

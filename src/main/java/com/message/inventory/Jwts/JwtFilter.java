@@ -20,7 +20,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     @Autowired
     JwtService jwtService;
-
     @Autowired
     ApplicationContext context;
 
@@ -29,12 +28,17 @@ public class JwtFilter extends OncePerRequestFilter {
         String header = request.getHeader("Authorization");
         String token = null;
         String username = null;
+
+        //Extract token and username if header is not null
         if(header!=null && header.startsWith("Bearer ")){
             token = header.substring(7);
             username = jwtService.extractUsername(token);
         }
+
+
         if(username != null && SecurityContextHolder.getContext().getAuthentication()==null){
             UserDetails userDetails = context.getBean(UserDetailServiceImplementation.class).loadUserByUsername(username);
+
             if(jwtService.validateToken(token,userDetails)){
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails,null,userDetails.getAuthorities());
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

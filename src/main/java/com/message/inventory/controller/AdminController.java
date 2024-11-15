@@ -13,41 +13,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
     @Autowired
     AdminService adminService;
-
     @PostMapping("/login")
     public String login(@RequestBody Admin admin){
         return adminService.verify(admin);
     }
-
     @PostMapping("/register")
     public ResponseEntity<?> newAdmin(@RequestBody Admin admin) {
         return adminService.newAdmin(admin);
     }
-
     @PutMapping("/update")
     public ResponseEntity<?> updateAdmin(@RequestBody Admin admin){
         return adminService.updateAdmin(admin);
     }
-
     @PostMapping("/addStoke")
     public ResponseEntity<?> addStock(@RequestBody List<Stock> list) {
         return adminService.addStock(list);
     }
-
-
     @GetMapping("/getCsrf")
     public org.springframework.security.web.server.csrf.CsrfToken getCsrf(HttpServletRequest request){
         return (org.springframework.security.web.server.csrf.CsrfToken) request.getAttribute("_csrf");
     }
-
     @GetMapping("/getSession")
     public String getSession(HttpServletRequest request){
         return "Hey "+request.getSession().getId();
     }
-
     @GetMapping("/getName")
     public String getName(){return "Satani sahaj";}
 

@@ -19,13 +19,10 @@ import java.util.List;
 public class EmailServiceImpl implements EmailService{
     @Autowired
     JavaMailSender javaMailSender;
-
     @Value("${spring.mail.username}")
     private String sender;
-
     @Autowired
     AdminRepo adminRepo;
-
     @Override
     public void sendSimpleMail(EmailDetails detail) {
         try{
@@ -46,7 +43,6 @@ public class EmailServiceImpl implements EmailService{
             }
         }
     }
-
     @Override
     public void sendMailWithAttechment(EmailDetails details){
         try{
