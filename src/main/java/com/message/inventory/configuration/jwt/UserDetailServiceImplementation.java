@@ -1,18 +1,14 @@
-package com.message.inventory.Jwts;
+package com.message.inventory.configuration.jwt;
 
-import com.message.inventory.model.Entity.Admin;
-import com.message.inventory.model.Entity.Customer;
+import com.message.inventory.model.entity.Admin;
+import com.message.inventory.model.entity.Customer;
 import com.message.inventory.repositories.AdminRepo;
 import com.message.inventory.repositories.CustomerRepo;
-import lombok.Builder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserDetailServiceImplementation implements UserDetailsService {

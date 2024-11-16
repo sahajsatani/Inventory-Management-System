@@ -1,7 +1,7 @@
-package com.message.inventory.model.Entity;
+package com.message.inventory.model.entity;
 
-import com.message.inventory.model.InvoiceDtos.Status;
-import com.message.inventory.model.Embedable.Address;
+import com.message.inventory.model.invoiceDtos.Status;
+import com.message.inventory.model.embedable.Address;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

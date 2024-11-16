@@ -1,4 +1,4 @@
-package com.message.inventory.model.Embedable;
+package com.message.inventory.model.embedable;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Pattern;

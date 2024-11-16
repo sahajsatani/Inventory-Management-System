@@ -1,4 +1,4 @@
-package com.message.inventory.model.CustomerResponseDtos;
+package com.message.inventory.model.customerResponseDtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

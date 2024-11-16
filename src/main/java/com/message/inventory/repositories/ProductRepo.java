@@ -1,6 +1,6 @@
 package com.message.inventory.repositories;
 
-import com.message.inventory.model.Entity.Product;
+import com.message.inventory.model.entity.Product;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

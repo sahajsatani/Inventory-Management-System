@@ -1,6 +1,6 @@
 package com.message.inventory.repositories;
 
-import com.message.inventory.model.Entity.Invoice;
+import com.message.inventory.model.entity.Invoice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

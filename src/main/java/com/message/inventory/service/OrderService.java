@@ -1,16 +1,16 @@
 package com.message.inventory.service;
 
-import com.message.inventory.Jwts.JwtService;
-import com.message.inventory.config.Mail.TwilioConfig;
-import com.message.inventory.model.CustomerResponseDtos.OrderResponse;
-import com.message.inventory.model.Email.EmailDetails;
-import com.message.inventory.model.Email.EmailService;
-import com.message.inventory.model.Embedable.Address;
-import com.message.inventory.model.Entity.Admin;
-import com.message.inventory.model.Entity.Invoice;
-import com.message.inventory.model.Entity.Order;
-import com.message.inventory.model.Entity.Product;
-import com.message.inventory.model.InvoiceDtos.Status;
+import com.message.inventory.configuration.jwt.JwtService;
+import com.message.inventory.configuration.txtMsg.TwilioConfig;
+import com.message.inventory.model.customerResponseDtos.OrderResponse;
+import com.message.inventory.configuration.email.EmailDetails;
+import com.message.inventory.configuration.email.EmailService;
+import com.message.inventory.model.embedable.Address;
+import com.message.inventory.model.entity.Admin;
+import com.message.inventory.model.entity.Invoice;
+import com.message.inventory.model.entity.Order;
+import com.message.inventory.model.entity.Product;
+import com.message.inventory.model.invoiceDtos.Status;
 import com.message.inventory.repositories.*;
 import com.twilio.rest.api.v2010.account.Message;
 import jakarta.transaction.Transactional;
@@ -107,9 +107,9 @@ public class OrderService {
 //                            new com.twilio.type.PhoneNumber("+14157670885"),
 //                            "Dear " + name + ", Your order of " + product + " is confirmed for price " + price + " INR. We’ll keep you updated on its status. Your satisfaction is our priority. Let us know if there’s anything we can improve.")
 //                    .create();
-            orderResponse = new OrderResponse(com.message.inventory.model.CustomerResponseDtos.Status.CONFIRMED, "Message Send Successfully...");
+            orderResponse = new OrderResponse(com.message.inventory.model.customerResponseDtos.Status.CONFIRMED, "Message Send Successfully...");
         } catch (Exception e) {
-            orderResponse = new OrderResponse(com.message.inventory.model.CustomerResponseDtos.Status.FAILED, e.getMessage());
+            orderResponse = new OrderResponse(com.message.inventory.model.customerResponseDtos.Status.FAILED, e.getMessage());
         }
         return orderResponse;
     }

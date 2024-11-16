@@ -1,7 +1,7 @@
 package com.message.inventory.service;
 
-import com.message.inventory.Jwts.JwtService;
-import com.message.inventory.model.Entity.Customer;
+import com.message.inventory.configuration.jwt.JwtService;
+import com.message.inventory.model.entity.Customer;
 import com.message.inventory.repositories.CustomerRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

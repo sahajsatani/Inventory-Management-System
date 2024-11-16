@@ -1,4 +1,4 @@
-package com.message.inventory.model.Entity;
+package com.message.inventory.model.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;

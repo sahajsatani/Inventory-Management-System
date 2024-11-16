@@ -1,6 +1,6 @@
 package com.message.inventory.service;
 
-import com.message.inventory.model.Entity.Product;
+import com.message.inventory.model.entity.Product;
 import com.message.inventory.repositories.ProductRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

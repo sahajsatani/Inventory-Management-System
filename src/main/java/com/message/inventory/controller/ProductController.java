@@ -1,6 +1,6 @@
 package com.message.inventory.controller;
 
-import com.message.inventory.model.Entity.Product;
+import com.message.inventory.model.entity.Product;
 import com.message.inventory.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

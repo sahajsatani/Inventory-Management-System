@@ -1,7 +1,5 @@
-package com.message.inventory.Jwts;
+package com.message.inventory.configuration.jwt;
 
-import com.message.inventory.model.Entity.Admin;
-import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -16,7 +14,6 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.function.Function;
 
 @Service
 @Builder

@@ -1,4 +1,4 @@
-package com.message.inventory.model.Email;
+package com.message.inventory.configuration.email;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

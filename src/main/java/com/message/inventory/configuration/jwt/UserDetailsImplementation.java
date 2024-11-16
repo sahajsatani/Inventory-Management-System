@@ -1,7 +1,7 @@
-package com.message.inventory.Jwts;
+package com.message.inventory.configuration.jwt;
 
-import com.message.inventory.model.Entity.Admin;
-import com.message.inventory.model.Entity.Customer;
+import com.message.inventory.model.entity.Admin;
+import com.message.inventory.model.entity.Customer;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

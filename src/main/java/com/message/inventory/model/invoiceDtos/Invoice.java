@@ -1,4 +1,4 @@
-package com.message.inventory.model.InvoiceDtos;
+package com.message.inventory.model.invoiceDtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

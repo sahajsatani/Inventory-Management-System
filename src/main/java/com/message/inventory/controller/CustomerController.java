@@ -1,8 +1,7 @@
 package com.message.inventory.controller;
 
-import com.message.inventory.model.Entity.Admin;
-import com.message.inventory.model.Entity.Customer;
-import com.message.inventory.model.Entity.Order;
+import com.message.inventory.model.entity.Customer;
+import com.message.inventory.model.entity.Order;
 import com.message.inventory.service.CustomerService;
 import com.message.inventory.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;

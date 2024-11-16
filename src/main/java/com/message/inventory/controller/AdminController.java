@@ -1,6 +1,6 @@
 package com.message.inventory.controller;
 
-import com.message.inventory.model.Entity.Admin;
+import com.message.inventory.model.entity.Admin;
 import com.message.inventory.model.DTO.Stock;
 import com.message.inventory.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;

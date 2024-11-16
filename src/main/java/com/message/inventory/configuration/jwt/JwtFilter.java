@@ -1,4 +1,4 @@
-package com.message.inventory.Jwts;
+package com.message.inventory.configuration.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
