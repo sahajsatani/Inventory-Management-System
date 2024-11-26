@@ -19,13 +19,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
     @Autowired
     JwtFilter jwtFilter;
-
     @Autowired
     UserDetailsService userDetailsService;
-
     @Bean //Filter chain handle api and check it authenticated or not and take action as per security configuration
     public SecurityFilterChain SecurityFilterChain(HttpSecurity http) throws Exception {
         return http

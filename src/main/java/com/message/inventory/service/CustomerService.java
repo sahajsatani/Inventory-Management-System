@@ -21,7 +21,6 @@ public class CustomerService {
     @Autowired
     JwtService jwtService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
-
     public ResponseEntity<?> register(Customer customer) {
         try {
             customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
@@ -33,18 +32,20 @@ public class CustomerService {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     public ResponseEntity<?> verify(Customer customer) {
         Authentication authentication;
         try{
             authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(customer.getEmail(), customer.getPassword()));
         }
         catch (Exception ex){
-            return new ResponseEntity<>(customer.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+            if(customerRepo.findByEmail(customer.getEmail()) == null)
+                return new ResponseEntity<>(customer.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+            else
+                return new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (authentication.isAuthenticated()) {
+        if (authentication.isAuthenticated())
             return new ResponseEntity<>(jwtService.generateToken(customer.getEmail()),HttpStatus.FOUND);
-        }
-        return new ResponseEntity<>(customer.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(customer.getEmail()+" don't matched with password",HttpStatus.NOT_FOUND);
     }
 }

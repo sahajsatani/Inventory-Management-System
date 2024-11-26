@@ -39,7 +39,6 @@ public class JwtService {
             throw new RuntimeException(e);
         }
     }
-
     //that generate jwt token
     public String generateToken(String email) {
         HashMap<String, Object> claims = new HashMap<>();
@@ -53,14 +52,12 @@ public class JwtService {
                 .signWith(getSecretKey())
                 .compact();
     }
-
     //create secure key
     private Key getSecretKey() {
         //secretKey = "SahajOrCode";
         byte[] keyBytes = Decoders.BASE64.decode((CharSequence) secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-
     public String extractUsername(String token) {
         return Jwts.parser()
                 .verifyWith((SecretKey) getSecretKey())
@@ -69,13 +66,11 @@ public class JwtService {
                 .getPayload()
                 .getSubject();
     }
-
     public boolean validateToken(String token, UserDetails userDetails) {
         String username = extractUsername(token);
         String email = userDetails.getUsername();
         return (username.equals(email)&& !isTokenExpired(token));
     }
-
     private boolean isTokenExpired(String token) {
        return Jwts.parser()
                    .verifyWith((SecretKey) getSecretKey())
@@ -85,7 +80,6 @@ public class JwtService {
                    .getExpiration()
                .before(new Date());
     }
-
     //Old way to gathering claims from token
 //    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
 //        final Claims claims = extractAllClaims(token);
@@ -99,7 +93,6 @@ public class JwtService {
 //                .parseSignedClaims(token)
 //                .getPayload();
 //    }
-
 //    private Date extractExpiration(String token){
 //        return extractClaim(token, Claims::getExpiration);
 //    }

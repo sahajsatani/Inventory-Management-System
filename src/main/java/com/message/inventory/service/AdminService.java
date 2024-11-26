@@ -75,11 +75,14 @@ public class AdminService {
              authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(admin.getEmail(), admin.getPassword()));
         }
         catch (Exception ex){
-            return new ResponseEntity<>(admin.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+            if(adminRepo.findByEmail(admin.getEmail()) == null)
+                return new ResponseEntity<>(admin.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+            else
+                return new ResponseEntity<>(ex.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        if (authentication.isAuthenticated()) {
+        if (authentication.isAuthenticated())
             return new ResponseEntity<>(jwtService.generateToken(admin.getEmail()),HttpStatus.FOUND);
-        }
-        return new ResponseEntity<>(admin.getEmail()+" Not found",HttpStatus.NOT_FOUND);
+        else
+            return new ResponseEntity<>(admin.getEmail()+" don't matched with password",HttpStatus.NOT_FOUND);
     }
 }
