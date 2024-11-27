@@ -33,7 +33,6 @@ public class UserDetailsImplementation implements UserDetails {
         else
             return Collections.singleton(new SimpleGrantedAuthority("USER"));
     }
-
     @Override
     public String getPassword() {
         if(admin!=null)

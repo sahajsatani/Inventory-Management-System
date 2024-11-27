@@ -80,6 +80,8 @@ public class JwtService {
                    .getExpiration()
                .before(new Date());
     }
+
+
     //Old way to gathering claims from token
 //    private <T> T extractClaim(String token, Function<Claims,T> claimResolver){
 //        final Claims claims = extractAllClaims(token);

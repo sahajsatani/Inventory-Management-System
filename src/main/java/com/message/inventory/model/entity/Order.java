@@ -30,12 +30,14 @@ public class Order {
     private int qty;
 
     private int price;
+
     private int totalAmount;
 
     private Status status = Status.ISSUED;
 
     private Address address;
 
+    //Mapping
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;

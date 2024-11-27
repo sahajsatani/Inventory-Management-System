@@ -23,11 +23,14 @@ public class CustomerService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder(12);
     public ResponseEntity<?> register(Customer customer) {
         try {
+            if(customerRepo.findByEmail(customer.getEmail())!=null){
+                return new ResponseEntity<>("Already exist customer.", HttpStatus.NOT_ACCEPTABLE);
+            }
             customer.setPassword(bCryptPasswordEncoder.encode(customer.getPassword()));
             if(customerRepo.save(customer)!=null)
                 return new ResponseEntity<>("Added Customer.", HttpStatus.CREATED);
             else
-                return new ResponseEntity<>("Not added customer.", HttpStatus.CREATED);
+                return new ResponseEntity<>("Not added customer.", HttpStatus.NOT_ACCEPTABLE);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(),HttpStatus.INTERNAL_SERVER_ERROR);
         }

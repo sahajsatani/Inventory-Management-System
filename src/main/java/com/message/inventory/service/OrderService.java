@@ -1,9 +1,9 @@
 package com.message.inventory.service;
 
 import com.message.inventory.configuration.jwt.JwtService;
-import com.message.inventory.configuration.txtMsg.TwilioConfig;
+import com.message.inventory.configuration.SMSconfig.TwilioDTO;
 import com.message.inventory.model.customerResponseDtos.OrderResponse;
-import com.message.inventory.configuration.email.EmailDetails;
+import com.message.inventory.configuration.email.EmailDetailsDTO;
 import com.message.inventory.configuration.email.EmailService;
 import com.message.inventory.model.embedable.Address;
 import com.message.inventory.model.entity.Admin;
@@ -13,6 +13,7 @@ import com.message.inventory.model.entity.Product;
 import com.message.inventory.model.invoiceDtos.Status;
 import com.message.inventory.repositories.*;
 import com.twilio.rest.api.v2010.account.Message;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,7 +30,7 @@ public class OrderService {
     @Autowired
     EmailService emailService;
     @Autowired
-    TwilioConfig twilioConfig;
+    TwilioDTO twilioDTO;
     @Autowired
     ProductRepo productRepo;
     @Autowired
@@ -62,9 +63,12 @@ public class OrderService {
                         .customerPayment(order.getCustomer())
                         .productId(order.getProduct().getProductId())
                         .qty(order.getQty())
-                        .gst(order.getProduct().getGst())
+                        .gst(order.getProduct()
+                        .getGst())
                         .totalAmount(order.getTotalAmount())
                         .build();
+                invoiceService.createInvoice(invoice);
+
                 //Send SMS to customer
                 OrderResponse orderResponse = sendOrderResponce(order.getCustomer().getName(),p.getProductName(),invoice.getTotalAmount(),order.getCustomer().getPhone());
 
@@ -72,7 +76,6 @@ public class OrderService {
                 sendOrderStatusToCustomerByEmail(orderRepo.save(order));
 
                 p = productRepo.save(p);
-                invoiceService.createInvoice(invoice);
                 //Send Threshold if stoke less than criteria
                 if(p.getInventoryStoke()<=100) {
                     sendThresholdByEmail(p);
@@ -145,35 +148,36 @@ public class OrderService {
         for (Admin admin : list) {
                 try {
                     String msg = new StringBuilder().append("Alert! Threshold Report\n").append("Stock Report: Product Inventory\n").append("\n").append("Product ID: ").append(p.getProductId()).append("\n").append("Product Name: ").append(p.getProductName()).append("\n").append("GST: ").append(p.getGst()).append("%\n").append("Price (INR): ").append(p.getPrice()).append(".00\n").append("Inventory Stock: ").append(p.getInventoryStoke()).append("\n").toString();
-                    EmailDetails emailDetails = EmailDetails.builder()
+                    EmailDetailsDTO emailDetailsDTO = EmailDetailsDTO.builder()
                             .recipient(admin.getEmail())
                             .subject("Stock alert!")
                             .msgBody(msg)
                             .build();
-                    emailService.sendSimpleMail(emailDetails);
+                    emailService.sendSimpleMail(emailDetailsDTO);
                 } catch (Exception e) {
                     String msg = new StringBuilder().append("Exception while send whatsapp message\n error:").append(e.getMessage()).toString();
-                    EmailDetails emailDetails = EmailDetails.builder()
+                    EmailDetailsDTO emailDetailsDTO = EmailDetailsDTO.builder()
                     .recipient(admin.getEmail())
                     .subject("Stock alert!")
                     .msgBody(msg)
                     .build();
-                    emailService.sendSimpleMail(emailDetails);
+                    emailService.sendSimpleMail(emailDetailsDTO);
                 }
         }
     }
     private void sendOrderStatusToCustomerByEmail(Order order) {
         String msg = makeMsg(order);
-        EmailDetails emailDetails = EmailDetails.builder()
+        EmailDetailsDTO emailDetailsDTO = EmailDetailsDTO.builder()
                 .recipient(order.getCustomer().getEmail())
                 .subject("Order Confirmed On Shopify")
                 .msgBody(msg)
                 .build();
-        emailService.sendSimpleMail(emailDetails);
+        emailService.sendSimpleMail(emailDetailsDTO);
     }
     private String makeMsg(Order order) {
         Address address = order.getAddress();
-        String msg = new StringBuilder().append("Order Confirmation\n").append("\n").append("Dear ").append(order.getCustomer().getName()).append(",\n").append("\n").append("Thank you for shopping with us! Your order has been confirmed successfully. Here are the details:\n").append("\n").append("- Order ID: ").append(order.getOrderId()).append("\n\n").append("- Order Date: ").append(order.getOrderDate()).append("\n\n").append("- Product Name: ").append(order.getProduct().getProductName()).append("\n\n").append("- Quantity: ").append(order.getQty()).append("\n\n").append("- Price: ").append(order.getPrice()).append("\n\n").append("- Total Amount (INR): ").append(order.getTotalAmount()).append(".00\n\n").append("- Shipping With in : ").append(order.getShippingDate()).append("\n\n").append("- Shipping Address:\n").append("  - Apartment No.: ").append(address.getAppartmentNo()).append("\n").append("  - Society: ").append(address.getSociety()).append("\n").append("  - Area: ").append(address.getArea()).append("\n").append("  - City: ").append(address.getCity()).append("\n").append("  - State: ").append(address.getState()).append("\n").append("  - Pincode: ").append(address.getPincode()).append("\n").append("\n").append("Your order is on its way! We'll notify you once it's shipped.\n").append("\n").append("If you have any questions or need assistance, feel free to reply to this email or contact our customer support team.\n").append("\n").append("Thank you for choosing us!\n").append("\n").append("Best regards,\n").append("Shopify\n").toString();
+        String msg = new StringBuilder().append("Order Confirmation\n").append("\n").append("Dear ").append(order.getCustomer().getName()).append(",\n").append("\n").append("Thank you for shopping with us! Your order has been confirmed successfully. Here are the details:\n").append("\n").append("- Order ID: ").append(order.getOrderId()).append("\n\n").append("- Order Date: ").append(order.getOrderDate()).append("\n\n").append("- Product Name: ").append(order.getProduct().getProductName()).append("\n\n").append("- Quantity: ").append(order.getQty()).append("\n\n").append("- Price: ").append(order.getPrice()).append("\n\n").append("- Total Amount (INR): ").append(order.getTotalAmount()).append(".00\n\n").append("- Shipping With in : ").append(order.getShippingDate()).append("\n\n").append("- Shipping Address:\n").append("  - Apartment No.: ").append(address.getAppartmentNo()).append("\n").append("  - Society: ").append(address.getSociety()).append("\n").append("  - Area: ").append(address.getArea()).append("\n").append("  - City: ").append(address.getCity()).append("\n").append("  - State: ").append(address.getState()).append("\n").append("  - Pincode: ").append(address.getPincode()).append("\n").append("\n").append("\n").append("Your order is on its way! We'll notify you once it's shipped.\n").append("\n").append("If you have any questions or need assistance, feel free to reply to this email or contact our customer support team.\n").append("\n").append("Thank you for choosing us!\n").append("\n").append("Best regards,\n").append("Shopify\n").toString();
+
         return msg;
     }
     public ResponseEntity<?> getOrder(int id) {

@@ -1,6 +1,6 @@
 package com.message.inventory;
 
-import com.message.inventory.configuration.txtMsg.TwilioConfig;
+import com.message.inventory.configuration.SMSconfig.TwilioDTO;
 import com.twilio.Twilio;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +15,11 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class InventoryApplication {
 
 	@Autowired
-	private TwilioConfig twilioConfig;
+	private TwilioDTO twilioDTO;
 
 	@PostConstruct
 	public void initTwilio(){
-		Twilio.init(twilioConfig.getAccountSid(),twilioConfig.getAuthToken());
+		Twilio.init(twilioDTO.getAccountSid(), twilioDTO.getAuthToken());
 	}
 	public static void main(String[] args) {
 		SpringApplication.run(InventoryApplication.class, args);

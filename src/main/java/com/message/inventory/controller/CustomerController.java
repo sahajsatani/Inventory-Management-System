@@ -19,10 +19,6 @@ public class CustomerController {
     public ResponseEntity<?> makeProduct(@RequestBody Order order) {
         return orderService.generateOrder(order);
     }
-    @GetMapping("/getOrder")
-    public ResponseEntity<?> getOrder(@RequestParam int id) {
-        return orderService.getOrder(id);
-    }
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Customer customer){
         return customerService.verify(customer);
@@ -30,5 +26,9 @@ public class CustomerController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody Customer customer) {
         return customerService.register(customer);
+    }
+    @GetMapping("/getOrder")
+    public ResponseEntity<?> getOrder(@RequestParam int id) {
+        return orderService.getOrder(id);
     }
 }

@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class EmailDetails {
+public class EmailDetailsDTO {
     private String recipient;
     private String msgBody;
     private String subject;

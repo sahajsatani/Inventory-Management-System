@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AdminRepo extends JpaRepository<Admin,Integer> {
-//    @Query(value = "select * from tbladmin where email = ?1",nativeQuery = true)
     Admin findByEmail(String email);
 
 }

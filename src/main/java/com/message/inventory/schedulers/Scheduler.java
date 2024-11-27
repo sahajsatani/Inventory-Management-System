@@ -1,7 +1,7 @@
 package com.message.inventory.schedulers;
 
 import com.message.inventory.model.entity.Admin;
-import com.message.inventory.configuration.email.EmailDetails;
+import com.message.inventory.configuration.email.EmailDetailsDTO;
 import com.message.inventory.configuration.email.EmailService;
 import com.message.inventory.model.entity.Product;
 import com.message.inventory.repositories.AdminRepo;
@@ -53,27 +53,27 @@ public class Scheduler {
             //Send report if sold any product
             if(flage){
                 List<Admin> admins = adminRepo.findAll();
-                EmailDetails emailDetails = EmailDetails.builder()
+                EmailDetailsDTO emailDetailsDTO = EmailDetailsDTO.builder()
                         .msgBody("Today's total sold product:")
                         .subject("Daliy Report")
                         .attachment("C:\\Users\\sahaj\\IdeaProjects\\inventory\\report.csv")
                         .build();
                 for (Admin admin : admins) {
-                    emailDetails.setRecipient(admin.getEmail());
-                    emailService.sendMailWithAttechment(emailDetails);
+                    emailDetailsDTO.setRecipient(admin.getEmail());
+                    emailService.sendMailWithAttechment(emailDetailsDTO);
                 }
                 productRepo.updateSold();
             }
             //Send msg if not sell any product
             else{
                 List<Admin> admins = adminRepo.findAll();
-                EmailDetails emailDetails = EmailDetails.builder()
+                EmailDetailsDTO emailDetailsDTO = EmailDetailsDTO.builder()
                         .msgBody("Not sell any one product")
                         .subject("Daliy Report")
                         .build();
                 for (Admin admin : admins) {
-                    emailDetails.setRecipient(admin.getEmail());
-                    emailService.sendSimpleMail(emailDetails);
+                    emailDetailsDTO.setRecipient(admin.getEmail());
+                    emailService.sendSimpleMail(emailDetailsDTO);
                 }
             }
 

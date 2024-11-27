@@ -24,23 +24,26 @@ public class Customer {
     private int customerId;
 
     @Pattern(regexp = "^[A-Z a-z]+$", message = "Please enter alphabet only")
+    @Column(nullable = false)
     private String name;
 
     @Pattern(regexp = "^[0-9]{10}$", message = "Please enter 10 number only")
+    @Column(nullable = false)
     private String phone;
 
     @Email
-    @Column(unique = true)
+    @Column(unique = true,nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private String password;
 
+    //Mapping
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customer")
     private List<Order> orders = new ArrayList<>();
 
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "customerPayment")
     private List<Invoice> invoices = new ArrayList<>();
-
 
     public Customer(int customerId) {
         this.customerId = customerId;

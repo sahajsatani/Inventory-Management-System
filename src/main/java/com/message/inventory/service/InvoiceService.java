@@ -7,10 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class InvoiceService {
-
     @Autowired
     InvoiceRepo invoiceRepo;
-
     public Invoice createInvoice(Invoice invoice) {
         try{
             return invoiceRepo.save(invoice);

@@ -2,7 +2,6 @@ package com.message.inventory.configuration.email;
 
 import com.message.inventory.model.entity.Admin;
 import com.message.inventory.repositories.AdminRepo;
-import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +15,7 @@ import java.io.File;
 import java.util.List;
 
 @Service
-public class EmailServiceImpl implements EmailService{
+public class EmailServiceImplementation implements EmailService{
     @Autowired
     JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
@@ -24,7 +23,7 @@ public class EmailServiceImpl implements EmailService{
     @Autowired
     AdminRepo adminRepo;
     @Override
-    public void sendSimpleMail(EmailDetails detail) {
+    public void sendSimpleMail(EmailDetailsDTO detail) {
         try{
             SimpleMailMessage message = new SimpleMailMessage();
             message.setFrom(sender);
@@ -38,13 +37,13 @@ public class EmailServiceImpl implements EmailService{
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setFrom(sender);
                 message.setTo(i.getEmail());
-                message.setSubject("Problem of email sender!");
+                message.setSubject("Problem in mail service!");
                 message.setText("Occured exception while sending email : " + e.getMessage());
             }
         }
     }
     @Override
-    public void sendMailWithAttechment(EmailDetails details){
+    public void sendMailWithAttechment(EmailDetailsDTO details){
         try{
             MimeMessage mimeMessage = javaMailSender.createMimeMessage();
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true);
@@ -63,7 +62,7 @@ public class EmailServiceImpl implements EmailService{
                 SimpleMailMessage message = new SimpleMailMessage();
                 message.setFrom(sender);
                 message.setTo(i.getEmail());
-                message.setSubject("Problem of email sender!");
+                message.setSubject("Problem in mail service!");
                 message.setText("Occured exception while sending email : " + e.getMessage());
             }
         }

@@ -20,16 +20,21 @@ public class Admin {
     private int adminId;
 
     @Pattern(regexp = "^[A-Za-z ]+$")
+    @Column(nullable = false)
     private String name;
 
     @Email
+    @Column(nullable = false)
     private String email;
 
     @Pattern(regexp = "^[1-9][0-9]{9}$")
+    @Column(nullable = false)
     private String phone;
 
     @Pattern(regexp = "^[1-9][0-9]{9}$")
+    @Column(nullable = false)
     private String whatsappNumber;
 
+    @Column(nullable = false)
     private String password;
 }

@@ -31,6 +31,7 @@ public class Invoice {
 
     private int totalAmount;
 
+    //Mapping
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customerPayment;
@@ -39,4 +40,17 @@ public class Invoice {
     @JoinColumn(name = "order_id")
     private Order orderID;
 
+    @Override
+    public String toString() {
+        return "Invoice: " +
+                "invoiceId=" + invoiceId +
+                ", date=" + date +
+                ", transactionId='" + transactionId + '\'' +
+                ", productId=" + productId +
+                ", gst=" + gst +
+                ", qty=" + qty +
+                ", totalAmount=" + totalAmount +
+                ", customerPayment=" + customerPayment +
+                ", orderID=" + orderID;
+    }
 }

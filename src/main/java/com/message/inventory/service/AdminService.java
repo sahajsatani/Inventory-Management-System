@@ -30,11 +30,14 @@ public class AdminService {
     AuthenticationManager authenticationManager;
     public ResponseEntity<?> newAdmin(Admin admin) {
         try{
+            if(adminRepo.findByEmail(admin.getEmail())!=null) {
+                return new ResponseEntity<>("Already exist admin.", HttpStatus.NOT_ACCEPTABLE);
+            }
             admin.setPassword(bCryptPasswordEncoder.encode(admin.getPassword()));
             if (adminRepo.save(admin) != null) {
                 return new ResponseEntity<>("Added new admin.", HttpStatus.CREATED);
             }
-            return new ResponseEntity<>("Not added admin.", HttpStatus.CREATED);
+            return new ResponseEntity<>("Not added admin.", HttpStatus.NOT_ACCEPTABLE);
         }catch (Exception e){
             return new ResponseEntity<>(e.getMessage(), HttpStatus.CREATED);
         }

@@ -23,20 +23,24 @@ public class Product {
     private int productId;
 
     @Pattern(regexp = "^[A-Za-z0-9 ]+$", message = "Please enter alphabet only")
+    @Column(nullable = false)
     private String productName;
 
     @Min(1) @Max(100)
+    @Column(nullable = false)
     private int gst;
 
+    @Column(nullable = false)
     private int price;
 
+    @Column(nullable = false)
     private int inventoryStoke;
 
     private int sold;
 
+    //Mapping
     @OneToMany(cascade = CascadeType.ALL,mappedBy = "product")
     private List<Order> orders = new ArrayList<>();
-
     public Product(int productId) {
         this.productId = productId;
     }
